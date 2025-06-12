@@ -1,0 +1,161 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+:root{
+    --color-fondo : #d0deeb;
+    --color-calculadora :  rgb(46, 40, 40);
+    --color-boton : rgb(212, 207, 201);
+    --color-boton-hover :  rgb(0, 8, 255);
+    --color-modo-oscuro: black;
+    --color-modo-oscuro-bordes: white;
+}
+
+
+body{
+    font-family: sans-serif;
+    background-color: var(--color-fondo);
+}
+
+.interruptor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer; /* cambia el cursor a una manito para saber q se puede hacer click */
+    margin-bottom: 20px;
+}
+
+.interruptor input {
+    display: none; /* oculto el check original */
+}
+
+.slider {
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+/* movimiento del circulo blanco */
+.slider::before {
+    content: "";
+    position: absolute; /* posicion dentro del padre el spam */
+    height: 16px;
+    width: 16px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px; /* posicion a la izquierda */
+    transition: transform 0.3s;
+}
+/* Cuando está marcado */
+#modo-oscuro:checked + .slider {
+    background-color: gray;
+}
+
+/* movimiento hacia el otro lado  */
+#modo-oscuro:checked + .slider::before{
+    transform: translateX(20px);
+}
+
+label{
+    font-weight: 700;
+}
+
+.modo-oscuro-activado{
+    background-color: black;
+}
+
+body.modo-oscuro-activado .calculadora,
+body.modo-oscuro-activado .calculadora-item,
+body.modo-oscuro-activado label{
+    border-color: var(--color-modo-oscuro-bordes);
+    color: var(--color-modo-oscuro-bordes);
+    background-color: var(--color-modo-oscuro);
+    opacity: 1;
+}
+
+
+.calculadora{
+      height: 90dvh;
+    width: 90vw;
+    max-width: 400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 3px;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: var(--color-calculadora);
+    user-select: none;
+}
+
+.calculadora-item{
+    background-color: transparent;
+    color: var(--color-boton);
+    border-radius: 40%;
+    border: 2px solid white;
+    font-weight: 900;
+    opacity: 0.6;
+}
+
+.calculadora-item:first-child{
+    grid-column: 1 / span 4;
+    border: 2px solid white;
+    border-radius: 20px;
+    font-size: 2rem;
+    padding: 0 15px 0 15px;
+    text-align: right;
+    height: 90px;
+    overflow-y: auto; /* srcroll vertical si se pasa del max height */
+    word-wrap: break-word; /* si se pasa horizontal se hace salto de linea */
+}
+
+.calculadora-item:hover{
+    color: var(--color-boton-hover);
+    border-color:  var(--color-boton-hover);
+    transition: 0.4s;
+    opacity: 1;
+}
+
+
+@media (max-width: 500px) {
+    .calculadora {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .calculadora-item {
+        font-size: 1rem;
+        padding: 8px;
+         overflow: hidden; /* "oculta para q no ocupe demas */
+    }
+
+    .calculadora-item:first-child {
+        font-size: 1.5rem;
+        height: 70px;
+    }
+
+    .slider {
+        width: 35px;
+        height: 18px;
+    }
+
+    .slider::before {
+        width: 14px;
+        height: 14px;
+    }
+
+    #modo-oscuro:checked + .slider::before {
+        transform: translateX(17px);
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+}
+
